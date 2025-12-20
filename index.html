@@ -1,260 +1,552 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playwright Scraping Test</title>
+    <title>Global Visa Regulations & Entry Requirements</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 2rem; }
-        h1, h2 { color: #333; }
-        p { margin-bottom: 1rem; }
-        table { border-collapse: collapse; width: 50%; margin-top: 1rem; }
-        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-        a { color: blue; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        button { padding: 0.5rem 1rem; margin-top: 1rem; cursor: pointer; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .intro-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        #intro {
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.8;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .policy-block {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .policy-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .policy-block h3 {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .policy-block h3::before {
+            content: "🔹";
+            font-size: 1.2rem;
+        }
+
+        .policy-block ul {
+            list-style: none;
+        }
+
+        .policy-block li {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .policy-block li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .policy-block strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 5px 20px rgba(253, 203, 110, 0.3);
+            border-left: 5px solid #e17055;
+        }
+
+        .highlight strong {
+            color: #d63031;
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .traveler-impact {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .traveler-impact h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .traveler-impact ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .traveler-impact li {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+            transition: all 0.3s ease;
+        }
+
+        .traveler-impact li:hover {
+            background: #e3e8f0;
+            transform: translateX(5px);
+        }
+
+        .traveler-impact strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .interactive-section h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #click-me {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        #click-me:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .link-section {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        a {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #ecf0f1;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        td {
+            padding: 1rem 1.2rem;
+            background: white;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        tbody tr:hover td {
+            background: #f8f9fa;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            transition: width 0.2s ease;
+        }
     </style>
 </head>
 <body>
-    <h1>Playwright Scraping Test Page</h1>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
 
-```
-<h2>Paragraphs</h2>
-<div class="container">
-        <h1>Enhanced Global Visa Regulations and Entry Requirements</h1>
-        
-        <p id="intro">
-            In response to evolving global security concerns, public health considerations, and international migration patterns, visa and immigration systems worldwide have undergone comprehensive reforms. Governments have implemented stricter border controls, enhanced verification protocols, and expanded eligibility requirements across multiple travel categories. These changes reflect a broader shift toward secure, regulated, and transparent international mobility frameworks. Key regulatory updates include:
-        </p>
-        
-<section class="visa-framework">
+    <header class="header">
+        <div class="header-content">
+            <h1>🌍 Global Visa Regulations Hub</h1>
+            <p class="subtitle">Comprehensive Entry Requirements & Immigration Protocols</p>
+        </div>
+    </header>
 
+    <div class="container">
+        <div class="intro-card">
+            <p id="intro">
+                In response to evolving global security concerns, public health considerations, and international migration patterns, visa and immigration systems worldwide have undergone comprehensive reforms. Governments have implemented stricter border controls, enhanced verification protocols, and expanded eligibility requirements across multiple travel categories. These changes reflect a broader shift toward secure, regulated, and transparent international mobility frameworks.
+            </p>
+        </div>
 
-    <!-- Core Application Controls -->
-    <article class="policy-block">
-        <h3>Digital Application Governance</h3>
-        <ul>
-            <li data-type="restricted_portal">
-                <strong>Government-Controlled Submission Portals:</strong>
-                All visa applications must be filed through centralized platforms featuring multi-factor authentication, real-time data validation, fraud detection, and restrictions on parallel submissions.
-            </li>
-            <li data-type="eligibility_screening">
-                <strong>Automated Eligibility Screening:</strong>
-                AI-based systems pre-screen applicants against financial, documentary, travel history, and intent criteria, with minimal human intervention.
-            </li>
-            <li data-type="restricted_evisa">
-                <strong>Limited eVisa & ETA Access:</strong>
-                Electronic visas and visa-on-arrival privileges are now restricted by nationality, travel purpose, and validity duration, requiring advance clearance.
-            </li>
-        </ul>
-    </article>
+        <h2 class="section-title">Core Visa Framework</h2>
 
-    <!-- Identity & Security -->
-    <article class="policy-block">
-        <h3>Identity Authentication & Security Vetting</h3>
-        <ul>
-            <li data-type="enhanced_biometrics">
-                <strong>Universal Biometric Enrollment:</strong>
-                Comprehensive biometric capture—including fingerprints, facial recognition, iris scans (where applicable), and digital signatures—is mandatory for all applicants without exemption.
-            </li>
-            <li data-type="security_intensified">
-                <strong>Expanded Security Intelligence Checks:</strong>
-                Applicant data is cross-referenced with international criminal, immigration, and counterterrorism databases through multi-agency intelligence sharing.
-            </li>
-        </ul>
-    </article>
+        <div class="policy-grid">
+            <article class="policy-block">
+                <h3>Digital Application Governance</h3>
+                <ul>
+                    <li data-type="restricted_portal">
+                        <strong>Government-Controlled Submission Portals</strong>
+                        All visa applications must be filed through centralized platforms featuring multi-factor authentication, real-time data validation, fraud detection, and restrictions on parallel submissions.
+                    </li>
+                    <li data-type="eligibility_screening">
+                        <strong>Automated Eligibility Screening</strong>
+                        AI-based systems pre-screen applicants against financial, documentary, travel history, and intent criteria, with minimal human intervention.
+                    </li>
+                    <li data-type="restricted_evisa">
+                        <strong>Limited eVisa & ETA Access</strong>
+                        Electronic visas and visa-on-arrival privileges are now restricted by nationality, travel purpose, and validity duration, requiring advance clearance.
+                    </li>
+                </ul>
+            </article>
 
-    <!-- Documentation -->
-    <article class="policy-block">
-        <h3>Evidence & Documentation Compliance</h3>
-        <ul>
-            <li data-type="document_verification">
-                <strong>Strict Documentation Thresholds:</strong>
-                Applications must include verified itineraries, accommodation proof, extended financial records, employment confirmation, insurance coverage, notarized invitations, and complete disclosures. Errors or inconsistencies result in automatic rejection.
-            </li>
-            <li data-type="digital_signature">
-                <strong>Cryptographic Document Authentication:</strong>
-                Digitally signed forms verified through cryptographic certificates are increasingly mandatory to prevent document forgery.
-            </li>
-        </ul>
-    </article>
+            <article class="policy-block">
+                <h3>Identity Authentication & Security</h3>
+                <ul>
+                    <li data-type="enhanced_biometrics">
+                        <strong>Universal Biometric Enrollment</strong>
+                        Comprehensive biometric capture—including fingerprints, facial recognition, iris scans, and digital signatures—is mandatory for all applicants without exemption.
+                    </li>
+                    <li data-type="security_intensified">
+                        <strong>Expanded Security Intelligence Checks</strong>
+                        Applicant data is cross-referenced with international criminal, immigration, and counterterrorism databases through multi-agency intelligence sharing.
+                    </li>
+                </ul>
+            </article>
 
-    <!-- Interviews & Processing -->
-    <article class="policy-block">
-        <h3>Adjudication & Interview Procedures</h3>
-        <ul>
-            <li data-type="limited_interview">
-                <strong>Standardized In-Person Interviews:</strong>
-                Physical embassy or consulate interviews are now required for most applicants, while interview waivers and virtual options have been sharply reduced.
-            </li>
-            <li data-type="controlled_processing">
-                <strong>Extended Processing Timelines:</strong>
-                Multi-layered reviews and enhanced security clearances have increased processing durations, with expedited handling limited to emergencies and official travel.
-            </li>
-        </ul>
-    </article>
+            <article class="policy-block">
+                <h3>Evidence & Documentation</h3>
+                <ul>
+                    <li data-type="document_verification">
+                        <strong>Strict Documentation Thresholds</strong>
+                        Applications must include verified itineraries, accommodation proof, extended financial records, employment confirmation, insurance coverage, and notarized invitations.
+                    </li>
+                    <li data-type="digital_signature">
+                        <strong>Cryptographic Document Authentication</strong>
+                        Digitally signed forms verified through cryptographic certificates are increasingly mandatory to prevent document forgery.
+                    </li>
+                </ul>
+            </article>
 
-    <!-- Visa Lifecycle -->
-    <article class="policy-block">
-        <h3>Visa Classification & Lifecycle Oversight</h3>
-        <ul>
-            <li data-type="visa_categories">
-                <strong>Modernized Visa Categories:</strong>
-                New visa classes now cover digital nomads, remote professionals, medical visitors, and long-term students, each governed by tailored compliance conditions.
-            </li>
-            <li data-type="compliance_monitoring">
-                <strong>Post-Entry Compliance Monitoring:</strong>
-                Visa holders are subject to digital tracking measures including address registration, periodic reporting, employment audits, and verified exit confirmation.
-            </li>
-        </ul>
-    </article>
+            <article class="policy-block">
+                <h3>Adjudication & Interviews</h3>
+                <ul>
+                    <li data-type="limited_interview">
+                        <strong>Standardized In-Person Interviews</strong>
+                        Physical embassy or consulate interviews are now required for most applicants, while interview waivers and virtual options have been sharply reduced.
+                    </li>
+                    <li data-type="controlled_processing">
+                        <strong>Extended Processing Timelines</strong>
+                        Multi-layered reviews and enhanced security clearances have increased processing durations, with expedited handling limited to emergencies.
+                    </li>
+                </ul>
+            </article>
 
-    <!-- Advisory -->
-    <aside class="highlight">
-        <strong>Traveler Advisory:</strong>
-        Strict adherence to application procedures, documentation standards, and interview schedules is mandatory. Failure to comply may result in visa refusal, delays, entry bans, or revocation of previously issued permissions. Applicants should always confirm country-specific rules through official diplomatic sources.
-    </aside>
+            <article class="policy-block">
+                <h3>Visa Lifecycle Oversight</h3>
+                <ul>
+                    <li data-type="visa_categories">
+                        <strong>Modernized Visa Categories</strong>
+                        New visa classes now cover digital nomads, remote professionals, medical visitors, and long-term students, each governed by tailored compliance conditions.
+                    </li>
+                    <li data-type="compliance_monitoring">
+                        <strong>Post-Entry Compliance Monitoring</strong>
+                        Visa holders are subject to digital tracking measures including address registration, periodic reporting, employment audits, and verified exit confirmation.
+                    </li>
+                </ul>
+            </article>
+        </div>
 
-    <!-- Impact Section -->
-    <section class="traveler-impact">
-        <h2>Implications for International Travelers</h2>
-        <ul>
-            <li data-type="health_clearance">
-                <strong>Health & Medical Clearance Requirements:</strong>
-                Proof of vaccination, negative disease testing, and valid medical insurance may be required, particularly for travelers from high-risk regions.
-            </li>
-            <li data-type="digital_travel_history">
-                <strong>Verified Travel History Analysis:</strong>
-                Authorities increasingly analyze digital travel records to detect overstays, inconsistencies, or prior violations.
-            </li>
-            <li data-type="financial_scrutiny">
-                <strong>Increased Financial Verification:</strong>
-                Applicants must demonstrate sufficient funds for the full duration of stay, with automated systems flagging anomalies.
-            </li>
-            <li data-type="background_checks">
-                <strong>Multi-Agency Background Checks:</strong>
-                Visa processing now involves law enforcement, intelligence agencies, and immigration authorities.
-            </li>
-            <li data-type="restricted_transit">
-                <strong>Stricter Transit & Layover Rules:</strong>
-                Some countries now require transit visas or advance clearance even for short connections.
-            </li>
-            <li data-type="remote_interview_monitoring">
-                <strong>AI-Monitored Virtual Interviews:</strong>
-                Where virtual interviews persist, AI proctoring monitors behavior, environment, and document presentation.
-            </li>
-            <li data-type="data_privacy">
-                <strong>Cross-Border Data Sharing Consent:</strong>
-                Applicants must consent to international sharing of personal, biometric, and financial data under strict data protection regimes.
-            </li>
-            <li data-type="frequent_traveler_restrictions">
-                <strong>Reduced Frequent Traveler Privileges:</strong>
-                Fast-track and waiver programs may be revoked due to security flags or prior violations.
-            </li>
-            <li data-type="climate_and_disaster_requirements">
-                <strong>Climate & Emergency Preparedness Declarations:</strong>
-                Some jurisdictions now require acknowledgment of disaster risks and evacuation procedures as part of visa approval.
-            </li>
-        </ul>
-    </section>
+        <aside class="highlight">
+            <strong>⚠️ Traveler Advisory</strong>
+            Strict adherence to application procedures, documentation standards, and interview schedules is mandatory. Failure to comply may result in visa refusal, delays, entry bans, or revocation of previously issued permissions. Applicants should always confirm country-specific rules through official diplomatic sources.
+        </aside>
 
-</section>
+        <section class="traveler-impact">
+            <h2>Implications for International Travelers</h2>
+            <ul>
+                <li data-type="health_clearance">
+                    <strong>Health & Medical Clearance Requirements</strong>
+                    Proof of vaccination, negative disease testing, and valid medical insurance may be required, particularly for travelers from high-risk regions.
+                </li>
+                <li data-type="digital_travel_history">
+                    <strong>Verified Travel History Analysis</strong>
+                    Authorities increasingly analyze digital travel records to detect overstays, inconsistencies, or prior violations.
+                </li>
+                <li data-type="financial_scrutiny">
+                    <strong>Increased Financial Verification</strong>
+                    Applicants must demonstrate sufficient funds for the full duration of stay, with automated systems flagging anomalies.
+                </li>
+                <li data-type="background_checks">
+                    <strong>Multi-Agency Background Checks</strong>
+                    Visa processing now involves law enforcement, intelligence agencies, and immigration authorities.
+                </li>
+                <li data-type="restricted_transit">
+                    <strong>Stricter Transit & Layover Rules</strong>
+                    Some countries now require transit visas or advance clearance even for short connections.
+                </li>
+                <li data-type="remote_interview_monitoring">
+                    <strong>AI-Monitored Virtual Interviews</strong>
+                    Where virtual interviews persist, AI proctoring monitors behavior, environment, and document presentation.
+                </li>
+                <li data-type="data_privacy">
+                    <strong>Cross-Border Data Sharing Consent</strong>
+                    Applicants must consent to international sharing of personal, biometric, and financial data under strict data protection regimes.
+                </li>
+                <li data-type="frequent_traveler_restrictions">
+                    <strong>Reduced Frequent Traveler Privileges</strong>
+                    Fast-track and waiver programs may be revoked due to security flags or prior violations.
+                </li>
+                <li data-type="climate_and_disaster_requirements">
+                    <strong>Climate & Emergency Preparedness Declarations</strong>
+                    Some jurisdictions now require acknowledgment of disaster risks and evacuation procedures as part of visa approval.
+                </li>
+            </ul>
+        </section>
 
+        <div class="interactive-section">
+            <h2>Quick Reference Tools</h2>
+            
+            <div class="link-section">
+                <a href="https://example.com" id="example-link">📋 Application Portal</a>
+                <a href="https://github.com" class="external-link">🔍 Document Checklist</a>
+            </div>
 
+            <div class="button-group">
+                <button id="click-me">Check Eligibility</button>
+                <button class="action-button">Schedule Interview</button>
+            </div>
 
-        
-        
+            <h3 style="margin-top: 2rem; color: #2c3e50;">Sample Processing Times</h3>
+            <table id="sample-table">
+                <thead>
+                    <tr>
+                        <th>Visa Type</th>
+                        <th>Processing Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tourist Visa</td>
+                        <td>15-30 days</td>
+                        <td><span class="badge">Standard</span></td>
+                    </tr>
+                    <tr>
+                        <td>Business Visa</td>
+                        <td>20-45 days</td>
+                        <td><span class="badge">Enhanced Review</span></td>
+                    </tr>
+                    <tr>
+                        <td>Student Visa</td>
+                        <td>30-60 days</td>
+                        <td><span class="badge">Extended Process</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-<div class="container">
-    <h1>Next-Gen Global Visa Protocols and Entry Governance</h1>
-    
-    
-    
-    <ul>
-        <li data-type="restricted_portal">
-            <strong>Quantum-Secured Digital Portals:</strong> All visa submissions are processed through centralized, government-controlled platforms equipped with multi-factor AI authentication, cross-border submission locks, real-time data integrity checks, and adaptive anti-fraud intelligence.
-        </li>
-        <li data-type="enhanced_biometrics">
-            <strong>Omni-Biometric Enrollment:</strong> Applicants undergo full-spectrum biometric profiling—including fingerprint arrays, facial and iris mapping, gait analysis, and cryptographically signed digital identity tokens—ensuring seamless verification with no exemptions.
-        </li>
-        <li data-type="document_verification">
-            <strong>Hyper-Verified Documentary Evidence:</strong> Applications now require AI-validated travel itineraries, blockchain-certified financial records, employment provenance verification, notarized digital invitations, and dynamically updated background disclosures. Non-compliant submissions are auto-rejected by predictive adjudication engines.
-        </li>
-        <li data-type="limited_interview">
-            <strong>Next-Level Consular Interface:</strong> In-person consular interviews are mandatory for most categories. Virtual interviews are minimized and selectively authorized for low-risk profiles, while automated risk scoring determines priority scheduling.
-        </li>
-        <li data-type="controlled_processing">
-            <strong>Extended Multi-Tier Processing:</strong> Applications traverse multi-layered administrative and inter-agency security review pipelines. Standard timelines have increased to accommodate AI-audited checks, with expedited pathways reserved for critical humanitarian or government missions.
-        </li>
-        <li data-type="security_intensified">
-            <strong>Integrated Global Security Vetting:</strong> Real-time cross-referencing against international watchlists, behavioral AI models, and threat intelligence feeds ensures maximal security. Interoperable data-sharing protocols allow seamless biometric and biographic verification across borders.
-        </li>
-        <li data-type="eligibility_screening">
-            <strong>AI-Driven Pre-Qualification:</strong> Automated eligibility engines assess financial solvency, travel patterns, historical compliance, and purpose-of-visit integrity. Manual overrides are highly restricted and subject to blockchain-logged audit trails.
-        </li>
-        <li data-type="restricted_evisa">
-            <strong>Selective Electronic Travel Authorizations:</strong> eVisa and visa-on-arrival programs are restricted by nationality and purpose. Mobile QR confirmations and electronic travel authorizations (ETAs) operate under limited validity windows and country-specific regulatory protocols.
-        </li>
-    </ul>
-</div>
+    <script>
+        document.getElementById('click-me').addEventListener('click', function() {
+            alert('Eligibility checker coming soon! Please consult your nearest embassy.');
+        });
 
+        document.querySelector('.action-button').addEventListener('click', function() {
+            alert('Interview scheduling system launching soon!');
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h2>Links</h2>
-<a href="https://example.com" id="example-link">Go to Example.com</a>
-<a href="https://github.com" class="external-link">Visit GitHub</a>
-
-<h2>Buttons</h2>
-<button id="click-me">Click Me!</button>
-<button class="action-button">Action</button>
-
-<h2>Table</h2>
-<table id="sample-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>City</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Alice</td>
-            <td>28</td>
-            <td>New York</td>
-        </tr>
-        <tr>
-            <td>Bob</td>
-            <td>34</td>
-            <td>London</td>
-        </tr>
-        <tr>
-            <td>Charlie</td>
-            <td>22</td>
-            <td>Paris</td>
-        </tr>
-    </tbody>
-</table>
-```
-
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollIndicator').style.width = scrolled + '%';
+        });
+    </script>
 </body>
 </html>
